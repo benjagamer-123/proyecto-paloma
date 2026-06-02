@@ -7,18 +7,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email  = mysqli_real_escape_string($conexion, $_POST['email']);
     $password = mysqli_real_escape_string($conexion, $_POST['pass']);
 
-    // SQL EXACTO: tabla 'usuario', columnas 'nombre', 'correo', 'pass'
-    $sql = "INSERT INTO usuario (nombre, email, pass) VALUES ('$nombre', '$email', '$password')";
+     // 1. PRIMERO: Verificamos si el email ya existe en la tabla
+    $checkEmail = "SELECT email FROM usuario WHERE email = '$email'";
+    $resultadoCheck = mysqli_query($conexion, $checkEmail);
 
-    
-    if (mysqli_query($conexion, $sql)) {
+    if (mysqli_num_rows($resultadoCheck) > 0) {
+        // Si el conteo es mayor a 0, el correo ya está en la base de datos
         echo "<script>
-                alert('¡Usuario registrado correctamente!');
-                window.location='login.php';
+                alert('El usuario ya está guardado, por favor prueba con otro correo.');
+                window.history.back(); // Esto los vuelve al formulario
               </script>";
-        exit();
     } else {
-        echo "Error: " . mysqli_error($conexion);
+        // 2. SEGUNDO: Si no existe, lo insertamos normalmente
+        $sql = "INSERT INTO usuario (nombre, email, pass) VALUES ('$nombre', '$email', '$password')"; 
+        
+        if (mysqli_query($conexion, $sql)) {
+            echo "<script>
+                    alert('¡Registro exitoso!');
+                    window.location='login.php';
+                  </script>";
+            exit();
+        } else {
+            echo "Error inesperado: " . mysqli_error($conexion);
+        }
     }
 }
 ?>
