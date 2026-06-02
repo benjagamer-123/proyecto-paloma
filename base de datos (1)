@@ -1,0 +1,45 @@
+delete database if exist tuortox;
+create database tuortox;
+
+-- 1. Crear la tabla Usuario primero (ya que otras dependen de ella)
+CREATE TABLE Usuario (
+    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    correo VARCHAR(100) UNIQUE,
+    contraseña VARCHAR(255)
+);
+
+-- 2. Crear la tabla Calendario
+CREATE TABLE Calendario (
+    idCalendario INT PRIMARY KEY AUTO_INCREMENT,
+    año INT,
+    mes INT,
+    dia INT,
+    usuarioId INT,
+    FOREIGN KEY (usuarioId) REFERENCES Usuario(idUsuario)
+);
+
+-- 3. Crear la tabla Recordatorio
+CREATE TABLE Recordatorio (
+    idRecordatorio INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(150),
+    descripcion TEXT,
+    año INT,
+    mes INT,
+    dia INT,
+    hora TIME,
+    calendarioId INT,
+    FOREIGN KEY (calendarioId) REFERENCES Calendario(idCalendario)
+);
+
+-- 4. Crear la tabla Alarma
+CREATE TABLE Alarma (
+    idAlarma INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(150),
+    hora INT,
+    minuto INT,
+    diaDeLaSemana VARCHAR(50),
+    sonido VARCHAR(100),
+    usuarioId INT,
+    FOREIGN KEY (usuarioId) REFERENCES Usuario(idUsuario)
+);
