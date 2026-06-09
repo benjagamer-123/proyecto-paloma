@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="estilos.css">
 
 </head>
+
 <body class="auth-container register-page">
     <div class="auth-card">
         <div class="auth-logo" aria-label="Logo de Tuortox">T</div>
