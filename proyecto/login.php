@@ -48,44 +48,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="auth-container login-page">
     <div class="auth-card">
-        <div class="auth-logo" aria-label="Logo de Tuortox">T</div>
+        <!-- Reemplazamos la 'T' por el icono SVG de la personita -->
+        <div class="auth-logo" aria-label="Logo de Tuortox">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 60%; height: 60%;">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </div>
         <h1>Bienvenido de nuevo</h1>
         <p class="auth-subtitle">Inicia sesión para continuar</p>
 
         <form method="POST">
-            <label for="email">Correo electrónico</label>
             <div class="input-wrapper">
                 <input id="email" type="email" name="email" placeholder="Email – you@example.com" required>
             </div>
 
-            <label for="pass">Contraseña</label>
             <div class="input-wrapper password-wrapper">
                 <input id="pass" type="password" name="pass" placeholder="••••••••" required>
-                <button class="password-toggle" type="button" aria-label="Mostrar contraseña" data-target="pass">👁</button>
-            </div>
-
-            <div class="auth-options">
-                <label class="auth-check">
-                    <input type="checkbox" name="recordarme">
-                    <span>Recordarme</span>
-                </label>
             </div>
 
             <button type="submit">ENTRAR</button>
         </form>
-        <p>¿No tienes cuenta? <a href="registro.php">Regístrate</a></p>
+        
+        <p class="auth-footer"><a href="registro.php">Regístrate</a></p>
     </div>
-
-    <script>
-        document.querySelectorAll('.password-toggle').forEach((button) => {
-            button.addEventListener('click', () => {
-                const input = document.getElementById(button.dataset.target);
-                const showing = input.type === 'text';
-                input.type = showing ? 'password' : 'text';
-                button.textContent = showing ? '👁' : '●';
-                button.setAttribute('aria-label', showing ? 'Mostrar contraseña' : 'Ocultar contraseña');
-            });
-        });
-    </script>
 </body>
 </html>
